@@ -35,6 +35,11 @@
       "key": "apiKey",
       "value": "41a54c2e2744dd0fd9df45174564473bc414c666c4b0a99cc14d93003e0c31e8",
       "type": "string"
+    },
+    {
+      "key": "passwordApiKey",
+      "value": "cd4e20a844e7cdfaa9d04d4d0555f7",
+      "type": "string"
     }
   ],
   "item": [
@@ -428,6 +433,155 @@
                 "v1",
                 "rice",
                 "student"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student Password Management",
+      "item": [
+        {
+          "name": "1. Reset Student Password (Dedicated Proxy)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student@riceindia.org\",\n  \"password\": \"Rice@2026\",\n  \"environment\": \"production\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/student/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "student",
+                "reset-password"
+              ]
+            },
+            "description": "Resets the password for one or more student accounts across Production, UAT, or Rice Edu LMS environments."
+          }
+        },
+        {
+          "name": "2. List Password Reset Targets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/student/reset-password/endpoints",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "student",
+                "reset-password",
+                "endpoints"
+              ]
+            },
+            "description": "Returns the available LMS environments for password resets."
+          }
+        },
+        {
+          "name": "3. Reset Password - Production Direct",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{passwordApiKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emails\": [\n    \"student@riceindia.org\"\n  ],\n  \"password\": \"Rice@2026\"\n}"
+            },
+            "url": {
+              "raw": "https://lms.ricesmart.in/change-password-by-email",
+              "protocol": "https",
+              "host": [
+                "lms",
+                "ricesmart",
+                "in"
+              ],
+              "path": [
+                "change-password-by-email"
+              ]
+            }
+          }
+        },
+        {
+          "name": "4. Reset Password - Testing / UAT Direct",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{passwordApiKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emails\": [\n    \"student@riceindia.org\"\n  ],\n  \"password\": \"Rice@2026\"\n}"
+            },
+            "url": {
+              "raw": "https://lms-uat.ricesmart.in/change-password-by-email",
+              "protocol": "https",
+              "host": [
+                "lms-uat",
+                "ricesmart",
+                "in"
+              ],
+              "path": [
+                "change-password-by-email"
+              ]
+            }
+          }
+        },
+        {
+          "name": "5. Reset Password - Rice Edu Production Direct",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{passwordApiKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emails\": [\n    \"student@riceindia.org\"\n  ],\n  \"password\": \"Rice@2026\"\n}"
+            },
+            "url": {
+              "raw": "https://lms.riceedu.in/change-password-by-email",
+              "protocol": "https",
+              "host": [
+                "lms",
+                "riceedu",
+                "in"
+              ],
+              "path": [
+                "change-password-by-email"
               ]
             }
           }

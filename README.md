@@ -42,7 +42,26 @@ Switch to the **Bulk Student Upload** tab in the web interface to upload student
 - **Real-Time Live Progress**: Watch each student's creation status live (`✓ Success` or `✗ Failed: reason`) with a visual progress bar.
 - **Report Export**: Download a full execution report as a `.csv` file upon completion.
 
-### 2. Swagger API Tester & Credential-Safe Proxy
+### 2. Student Password Reset by Email
+Switch to the **Reset Password** tab in the web interface to reset and change student LMS login passwords:
+- **Dedicated REST API**: `POST /api/student/reset-password` accepts:
+  ```json
+  {
+    "email": "student@riceindia.org",
+    "password": "NewPassword@123",
+    "environment": "production"
+  }
+  ```
+  *(Also supports multiple emails via `"emails": ["student1@...", "student2@..."]`)*.
+- **LMS Environment Selector**:
+  - `production` -> `https://lms.ricesmart.in/change-password-by-email`
+  - `uat` -> `https://lms-uat.ricesmart.in/change-password-by-email`
+  - `riceedu` -> `https://lms.riceedu.in/change-password-by-email`
+  - `riceedu_uat` -> `https://lms-uat.riceedu.in/change-password-by-email`
+- **Credential-Safe Proxy**: Automatically applies authorized server credentials (`Authorization: cd4e20a844e7cdfaa9d04d4d0555f7`) without exposing them to the client.
+- **Web UI Controls**: Live email input, password generator with one-click strong password creation, show/hide toggle, and instant visual status reporting.
+
+### 3. Swagger API Tester & Credential-Safe Proxy
 The app serves a local Swagger UI backed by `/openapi.json` and proxies requests through `/api/proxy/{id}`:
 - **Rice Smart Production Server**: `https://lms.ricesmart.in/api/v1/rice/student` (Production)
 - **Rice Smart Testing / UAT Server**: `https://lms-uat.ricesmart.in/api/v1/rice/student` (UAT)

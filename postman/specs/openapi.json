@@ -13,6 +13,9 @@
   ],
   "tags": [
     {
+      "name": "Student Password Management"
+    },
+    {
       "name": "Bulk Student Upload"
     },
     {
@@ -437,6 +440,48 @@
     "/6": {
       "post": {
         "operationId": "request_6",
+        "summary": "Reset Student Password by Email (Testing / UAT)",
+        "description": "Environment: UAT\nTarget: https://lms-uat.ricesmart.in/change-password-by-email\nCredentials are applied by the local proxy.",
+        "tags": [
+          "UAT"
+        ],
+        "responses": {
+          "default": {
+            "description": "Response returned by the selected API."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "emails": [
+                  "student@riceindia.org"
+                ],
+                "password": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/7": {
+      "post": {
+        "operationId": "request_7",
         "summary": "Add Batch SMS To LMS",
         "description": "Environment: Production / development\nTarget: https://lms.riceedu.in/api/v1/rice/batch\nCredentials are applied by the local proxy.",
         "tags": [
@@ -541,109 +586,11 @@
         }
       }
     },
-    "/7": {
-      "post": {
-        "operationId": "request_7",
-        "summary": "Add Batch SMS To LMS local",
-        "description": "Environment: Production / development\nTarget: http://localhost:18000/api/v1/rice/batch\nCredentials are applied by the local proxy.",
-        "tags": [
-          "Production / development"
-        ],
-        "responses": {
-          "default": {
-            "description": "Response returned by the selected API."
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "data": {
-                    "type": "object",
-                    "properties": {
-                      "batchName": {
-                        "type": "string"
-                      },
-                      "branchUniqueId": {
-                        "type": "string"
-                      },
-                      "batchUniqueId": {
-                        "type": "string"
-                      },
-                      "studentStrength": {
-                        "type": "integer"
-                      },
-                      "language": {
-                        "type": "integer"
-                      },
-                      "category": {
-                        "type": "integer"
-                      },
-                      "dayPref": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "startDate": {
-                        "type": "string"
-                      },
-                      "endDate": {
-                        "type": "string"
-                      },
-                      "courseId": {
-                        "type": "string"
-                      },
-                      "timeSlotsOnline": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "minimumStrength": {
-                        "type": "integer"
-                      },
-                      "classMode": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              },
-              "example": {
-                "data": {
-                  "batchName": "",
-                  "branchUniqueId": "",
-                  "batchUniqueId": "",
-                  "studentStrength": 0,
-                  "language": 0,
-                  "category": 0,
-                  "dayPref": [
-                    ""
-                  ],
-                  "startDate": "",
-                  "endDate": "",
-                  "courseId": "",
-                  "timeSlotsOnline": [
-                    ""
-                  ],
-                  "minimumStrength": 0,
-                  "classMode": ""
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/8": {
       "post": {
         "operationId": "request_8",
-        "summary": "Add Batch SMS To LMS local Copy",
-        "description": "Environment: Production / development\nTarget: https://lms-dev.ricesmart.in/api/v1/rice/batch\nCredentials are applied by the local proxy.",
+        "summary": "Add Batch SMS To LMS local",
+        "description": "Environment: Production / development\nTarget: http://localhost:18000/api/v1/rice/batch\nCredentials are applied by the local proxy.",
         "tags": [
           "Production / development"
         ],
@@ -740,6 +687,104 @@
     "/9": {
       "post": {
         "operationId": "request_9",
+        "summary": "Add Batch SMS To LMS local Copy",
+        "description": "Environment: Production / development\nTarget: https://lms-dev.ricesmart.in/api/v1/rice/batch\nCredentials are applied by the local proxy.",
+        "tags": [
+          "Production / development"
+        ],
+        "responses": {
+          "default": {
+            "description": "Response returned by the selected API."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "batchName": {
+                        "type": "string"
+                      },
+                      "branchUniqueId": {
+                        "type": "string"
+                      },
+                      "batchUniqueId": {
+                        "type": "string"
+                      },
+                      "studentStrength": {
+                        "type": "integer"
+                      },
+                      "language": {
+                        "type": "integer"
+                      },
+                      "category": {
+                        "type": "integer"
+                      },
+                      "dayPref": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "courseId": {
+                        "type": "string"
+                      },
+                      "timeSlotsOnline": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "minimumStrength": {
+                        "type": "integer"
+                      },
+                      "classMode": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "example": {
+                "data": {
+                  "batchName": "",
+                  "branchUniqueId": "",
+                  "batchUniqueId": "",
+                  "studentStrength": 0,
+                  "language": 0,
+                  "category": 0,
+                  "dayPref": [
+                    ""
+                  ],
+                  "startDate": "",
+                  "endDate": "",
+                  "courseId": "",
+                  "timeSlotsOnline": [
+                    ""
+                  ],
+                  "minimumStrength": 0,
+                  "classMode": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/10": {
+      "post": {
+        "operationId": "request_10",
         "summary": "Add Student SMS To LMS",
         "description": "Environment: Production / development\nTarget: http://lms-new.ricesmart.in/api/v1/rice/student\nCredentials are applied by the local proxy.",
         "tags": [
@@ -817,9 +862,9 @@
         }
       }
     },
-    "/10": {
+    "/11": {
       "post": {
-        "operationId": "request_10",
+        "operationId": "request_11",
         "summary": "PP server Add Student SMS To LMS",
         "description": "Environment: Production / development\nTarget: https://lms-pp.ricesmart.in/api/v1/rice/student\nCredentials are applied by the local proxy.",
         "tags": [
@@ -897,9 +942,9 @@
         }
       }
     },
-    "/11": {
+    "/12": {
       "get": {
-        "operationId": "request_11",
+        "operationId": "request_12",
         "summary": "Batch Group GET",
         "description": "Environment: Production / development\nTarget: http://localhost:18000/api/v1/paid-user/get-or-create-batch-group\nCredentials are applied by the local proxy.",
         "tags": [
@@ -912,9 +957,9 @@
         }
       }
     },
-    "/12": {
+    "/13": {
       "post": {
-        "operationId": "request_12",
+        "operationId": "request_13",
         "summary": "Batch Group POST",
         "description": "Environment: Production / development\nTarget: http://localhost:18000/api/v1/paid-user/get-or-create-batch-group/\nCredentials are applied by the local proxy.",
         "tags": [
@@ -954,9 +999,9 @@
         }
       }
     },
-    "/13": {
+    "/14": {
       "post": {
-        "operationId": "request_13",
+        "operationId": "request_14",
         "summary": "defaulter",
         "description": "Environment: Production / development\nTarget: http://lms-uat.ricesmart.in/api/v1/paid-user/defaulter_student_list/\nCredentials are applied by the local proxy.",
         "tags": [
@@ -1007,9 +1052,9 @@
         }
       }
     },
-    "/14": {
+    "/15": {
       "post": {
-        "operationId": "request_14",
+        "operationId": "request_15",
         "summary": "Add Student SMS To LMS (Rice Edu Production)",
         "description": "Environment: Rice Edu\nTarget: https://lms.riceedu.in/api/v1/rice/student\nCredentials are applied by the local proxy.",
         "tags": [
@@ -1087,9 +1132,51 @@
         }
       }
     },
-    "/15": {
+    "/16": {
       "post": {
-        "operationId": "request_15",
+        "operationId": "request_16",
+        "summary": "Reset Student Password by Email (Production)",
+        "description": "Environment: Production\nTarget: https://lms.ricesmart.in/change-password-by-email\nCredentials are applied by the local proxy.",
+        "tags": [
+          "Production"
+        ],
+        "responses": {
+          "default": {
+            "description": "Response returned by the selected API."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "emails": [
+                  "student@riceindia.org"
+                ],
+                "password": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/17": {
+      "post": {
+        "operationId": "request_17",
         "summary": "Add Student SMS To LMS (Rice Edu Testing / UAT)",
         "description": "Environment: Rice Edu\nTarget: https://lms-uat.riceedu.in/api/v1/rice/student\nCredentials are applied by the local proxy.",
         "tags": [
@@ -1161,6 +1248,90 @@
                   "secondaryLangauge": "hindi",
                   "classStartDate": "11/6/2026"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/18": {
+      "post": {
+        "operationId": "request_18",
+        "summary": "Reset Student Password by Email (Rice Edu Production)",
+        "description": "Environment: Rice Edu\nTarget: https://lms.riceedu.in/change-password-by-email\nCredentials are applied by the local proxy.",
+        "tags": [
+          "Rice Edu"
+        ],
+        "responses": {
+          "default": {
+            "description": "Response returned by the selected API."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "emails": [
+                  "student@riceindia.org"
+                ],
+                "password": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/19": {
+      "post": {
+        "operationId": "request_19",
+        "summary": "Reset Student Password by Email (Rice Edu Testing / UAT)",
+        "description": "Environment: Rice Edu\nTarget: https://lms-uat.riceedu.in/change-password-by-email\nCredentials are applied by the local proxy.",
+        "tags": [
+          "Rice Edu"
+        ],
+        "responses": {
+          "default": {
+            "description": "Response returned by the selected API."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "emails": [
+                  "student@riceindia.org"
+                ],
+                "password": ""
               }
             }
           }
@@ -1258,6 +1429,93 @@
         "responses": {
           "200": {
             "description": "Detailed upload execution report."
+          }
+        }
+      }
+    },
+    "/api/student/reset-password": {
+      "post": {
+        "summary": "Reset student password by email",
+        "description": "Resets the password for one or more student accounts across Production, UAT, or Rice Edu LMS environments using authorized server credentials.",
+        "tags": [
+          "Student Password Management"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "student@riceindia.org"
+                  },
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "student1@riceindia.org",
+                      "student2@riceindia.org"
+                    ]
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Rice@2026"
+                  },
+                  "environment": {
+                    "type": "string",
+                    "enum": [
+                      "production",
+                      "uat",
+                      "riceedu",
+                      "riceedu_uat"
+                    ],
+                    "default": "production",
+                    "description": "Target LMS environment"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "Optional custom change-password-by-email endpoint URL"
+                  }
+                },
+                "required": [
+                  "password"
+                ]
+              },
+              "example": {
+                "email": "student@riceindia.org",
+                "password": "Rice@2026",
+                "environment": "production"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset result report."
+          },
+          "400": {
+            "description": "Validation error (missing email or password)."
+          },
+          "502": {
+            "description": "Connection error to LMS server."
+          }
+        }
+      }
+    },
+    "/api/student/reset-password/endpoints": {
+      "get": {
+        "summary": "List password reset LMS target endpoints",
+        "description": "Returns candidate LMS servers available for student password resets.",
+        "tags": [
+          "Student Password Management"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of password reset targets."
           }
         }
       }

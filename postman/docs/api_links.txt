@@ -1,4 +1,11 @@
+# Student Creation Endpoints
 https://lms.ricesmart.in/api/v1/rice/student
 https://lms-uat.ricesmart.in/api/v1/rice/student
 https://lms.riceedu.in/api/v1/rice/student
 https://lms-uat.riceedu.in/api/v1/rice/student
+
+# Student Password Reset Endpoints
+https://lms.ricesmart.in/change-password-by-email
+https://lms-uat.ricesmart.in/change-password-by-email
+https://lms.riceedu.in/change-password-by-email
+https://lms-uat.riceedu.in/change-password-by-email

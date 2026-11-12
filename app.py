@@ -23,12 +23,61 @@ SOURCES = [
     ("LMS API's FOR SMS (UAT).postman_collection.json", "UAT"),
     ("LMS API's FOR SMS.postman_collection 1.json", "Production / development"),
     ("Add student on Rice Edu.postman_collection 1.json", "Rice Edu"),
+    ("LMS Production Reset Password.postman_collection 1.json", "Production"),
 ]
-# These requests cover student, batch, batch-group, and defaulter workflows.
-# Credential, password, and role administration endpoints are deliberately excluded.
-ALLOWED = re.compile(r"student|batch|defaulter", re.I)
-BLOCKED = re.compile(r"password|role|cco|sro|campaign", re.I)
+# These requests cover student, batch, batch-group, defaulter, and student password reset workflows.
+ALLOWED = re.compile(r"student|batch|defaulter|password|change-password", re.I)
+BLOCKED = re.compile(r"role|cco|sro|campaign", re.I)
 STUDENT_REQUEST_EXAMPLE_PATH = ROOT / "postman" / "secrets" / "student_request_example.json"
+PASSWORD_API_KEY_PATH = ROOT / "postman" / "secrets" / "password_api_key.txt"
+DEFAULT_PASSWORD_API_KEY = "cd4e20a844e7cdfaa9d04d4d0555f7"
+
+PASSWORD_RESET_TARGETS = {
+    "production": "https://lms.ricesmart.in/change-password-by-email",
+    "ricesmart": "https://lms.ricesmart.in/change-password-by-email",
+    "uat": "https://lms-uat.ricesmart.in/change-password-by-email",
+    "testing": "https://lms-uat.ricesmart.in/change-password-by-email",
+    "riceedu": "https://lms.riceedu.in/change-password-by-email",
+    "riceedu_prod": "https://lms.riceedu.in/change-password-by-email",
+    "riceedu_uat": "https://lms-uat.riceedu.in/change-password-by-email",
+}
+
+PASSWORD_RESET_ENDPOINTS = [
+    {
+        "id": "production",
+        "name": "Rice Smart Production",
+        "environment": "Production",
+        "url": "https://lms.ricesmart.in/change-password-by-email",
+    },
+    {
+        "id": "uat",
+        "name": "Rice Smart Testing / UAT",
+        "environment": "UAT",
+        "url": "https://lms-uat.ricesmart.in/change-password-by-email",
+    },
+    {
+        "id": "riceedu",
+        "name": "Rice Edu Production",
+        "environment": "Rice Edu",
+        "url": "https://lms.riceedu.in/change-password-by-email",
+    },
+    {
+        "id": "riceedu_uat",
+        "name": "Rice Edu Testing / UAT",
+        "environment": "Rice Edu",
+        "url": "https://lms-uat.riceedu.in/change-password-by-email",
+    },
+]
+
+
+def get_password_auth_key():
+    env_key = os.environ.get("LMS_PASSWORD_API_KEY")
+    if env_key:
+        return env_key.strip()
+    if PASSWORD_API_KEY_PATH.exists():
+        content = PASSWORD_API_KEY_PATH.read_text(encoding="utf-8").strip()
+        return content.split(":", 1)[1].strip() if ":" in content else content
+    return DEFAULT_PASSWORD_API_KEY
 
 
 def load_student_request_example():
@@ -69,24 +118,36 @@ def blank_sample(value):
 
 
 def auth_header(request, collection):
+    url = resolve_url(request.get("url", {}))
+
+    # 1. Check headers on request directly (e.g. UAT Reset password has Authorization header)
+    for h in request.get("header", []):
+        if h.get("key", "").upper() in {"AUTHORIZATION", "X-API-KEY"}:
+            val = (h.get("value") or "").strip()
+            if val and not val.startswith("{{"):
+                return (h.get("key"), val)
+
+    # 2. Check auth block
     auth = request.get("auth") or collection.get("auth") or {}
-    if auth.get("type") != "apikey":
-        return None
-    fields = {field.get("key"): field.get("value", "") for field in auth.get("apikey", [])}
-    name = fields.get("key")
-    if not name:
-        return None
-    val = (fields.get("value") or "").strip()
-    # The collection request is the source of truth, just as it is in Postman.
-    # Use the local key file when the request has no credential or has a placeholder.
-    key_file = ROOT / "postman" / "secrets" / "api_key.txt"
-    key = ""
-    if key_file.exists():
-        content = key_file.read_text(encoding="utf-8").strip()
-        key = content.split(":", 1)[1].strip() if ":" in content else content
-    if not val or val.upper() == "AUTHORIZATION" or val.startswith("{{"):
-        val = key
-    return (name, val or key)
+    if auth.get("type") == "apikey":
+        fields = {field.get("key"): field.get("value", "") for field in auth.get("apikey", [])}
+        name = fields.get("key")
+        if name:
+            val = (fields.get("value") or "").strip()
+            key_file = ROOT / "postman" / "secrets" / "api_key.txt"
+            key = ""
+            if key_file.exists():
+                content = key_file.read_text(encoding="utf-8").strip()
+                key = content.split(":", 1)[1].strip() if ":" in content else content
+            if not val or val.upper() == "AUTHORIZATION" or val.startswith("{{"):
+                val = key
+            return (name, val or key)
+
+    # 3. Dedicated fallback for password reset endpoints
+    if "change-password" in url:
+        return ("Authorization", get_password_auth_key())
+
+    return None
 
 
 def catalog():
@@ -117,6 +178,12 @@ def catalog():
                 url = "https://lms.riceedu.in/api/v1/rice/student"
                 item_env = "Rice Edu"
                 item_name = "Add Student SMS To LMS (Rice Edu Production)"
+            elif url == "https://lms.ricesmart.in/change-password-by-email":
+                item_env = "Production"
+                item_name = "Reset Student Password by Email (Production)"
+            elif url == "https://lms-uat.ricesmart.in/change-password-by-email":
+                item_env = "UAT"
+                item_name = "Reset Student Password by Email (Testing / UAT)"
 
             body = None
             raw = (request.get("body") or {}).get("raw")
@@ -127,6 +194,8 @@ def catalog():
                     body = {}
             if method == "POST" and "student" in url.lower() and url.rstrip("/").endswith("/api/v1/rice/student") and "ricesmart" in url.lower():
                 body = load_student_request_example() or body
+            if method == "POST" and "change-password" in url:
+                body = {"emails": ["student@riceindia.org"], "password": ""}
             result.append({
                 "id": f"{len(result)}",
                 "name": item_name,
@@ -183,6 +252,31 @@ def catalog():
             "url": riceedu_uat_student_url,
             "body": student_template,
             "auth": shared_auth,
+        })
+
+    # Ensure Rice Edu password reset endpoints are present in catalog
+    riceedu_pwd_url = "https://lms.riceedu.in/change-password-by-email"
+    if not any(item["url"] == riceedu_pwd_url and item["method"] == "POST" for item in result):
+        result.append({
+            "id": f"{len(result)}",
+            "name": "Reset Student Password by Email (Rice Edu Production)",
+            "environment": "Rice Edu",
+            "method": "POST",
+            "url": riceedu_pwd_url,
+            "body": {"emails": ["student@riceindia.org"], "password": ""},
+            "auth": ("Authorization", get_password_auth_key()),
+        })
+
+    riceedu_uat_pwd_url = "https://lms-uat.riceedu.in/change-password-by-email"
+    if not any(item["url"] == riceedu_uat_pwd_url and item["method"] == "POST" for item in result):
+        result.append({
+            "id": f"{len(result)}",
+            "name": "Reset Student Password by Email (Rice Edu Testing / UAT)",
+            "environment": "Rice Edu",
+            "method": "POST",
+            "url": riceedu_uat_pwd_url,
+            "body": {"emails": ["student@riceindia.org"], "password": ""},
+            "auth": ("Authorization", get_password_auth_key()),
         })
 
     # Re-index ids sequentially
@@ -287,8 +381,65 @@ def openapi_document():
         }
     }
 
+    # Dedicated Student Password Reset endpoints
+    paths["/api/student/reset-password"] = {
+        "post": {
+            "summary": "Reset student password by email",
+            "description": "Resets the password for one or more student accounts across Production, UAT, or Rice Edu LMS environments using authorized server credentials.",
+            "tags": ["Student Password Management"],
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {"type": "string", "example": "student@riceindia.org"},
+                                "emails": {
+                                    "type": "array",
+                                    "items": {"type": "string"},
+                                    "example": ["student1@riceindia.org", "student2@riceindia.org"],
+                                },
+                                "password": {"type": "string", "example": "Rice@2026"},
+                                "environment": {
+                                    "type": "string",
+                                    "enum": ["production", "uat", "riceedu", "riceedu_uat"],
+                                    "default": "production",
+                                    "description": "Target LMS environment",
+                                },
+                                "url": {
+                                    "type": "string",
+                                    "description": "Optional custom change-password-by-email endpoint URL",
+                                },
+                            },
+                            "required": ["password"],
+                        },
+                        "example": {
+                            "email": "student@riceindia.org",
+                            "password": "Rice@2026",
+                            "environment": "production",
+                        },
+                    }
+                },
+            },
+            "responses": {
+                "200": {"description": "Password reset result report."},
+                "400": {"description": "Validation error (missing email or password)."},
+                "502": {"description": "Connection error to LMS server."},
+            },
+        }
+    }
+    paths["/api/student/reset-password/endpoints"] = {
+        "get": {
+            "summary": "List password reset LMS target endpoints",
+            "description": "Returns candidate LMS servers available for student password resets.",
+            "tags": ["Student Password Management"],
+            "responses": {"200": {"description": "List of password reset targets."}},
+        }
+    }
+
     env_tags = [{"name": name} for name in dict.fromkeys(api["environment"] for api in catalog())]
-    tags = [{"name": "Bulk Student Upload"}] + env_tags
+    tags = [{"name": "Student Password Management"}, {"name": "Bulk Student Upload"}] + env_tags
 
     return {
         "openapi": "3.0.3",
@@ -442,6 +593,11 @@ body{margin:0;background:var(--bg);color:var(--text-main);font-family:system-ui,
         Bulk Student Upload
         <span class="tab-badge">Excel / CSV</span>
       </button>
+      <button class="nav-tab" id="btn-password" onclick="switchView('password')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Reset Password
+        <span class="tab-badge" style="background:#fef3c7;color:#92400e;">Email</span>
+      </button>
     </div>
   </div>
 </header>
@@ -583,6 +739,58 @@ body{margin:0;background:var(--bg);color:var(--text-main);font-family:system-ui,
   </div>
 </div>
 
+<!-- View 3: Reset Student Password -->
+<div id="view-password" style="display:none;">
+  <div class="shell">
+    <div class="notice">Reset and change student LMS login passwords using their registered primary email address. Requests are securely sent through the credential-safe proxy with authorized credentials.</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>Reset Student Password by Email</h2>
+          <p class="card-desc">Select the target LMS environment, enter student email(s), and set a new password.</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label for="pwd-env">Target LMS Environment</label>
+          <select id="pwd-env" class="form-control">
+            <option value="production">Rice Smart Production (https://lms.ricesmart.in)</option>
+            <option value="uat">Rice Smart Testing / UAT (https://lms-uat.ricesmart.in)</option>
+            <option value="riceedu">Rice Edu Production (https://lms.riceedu.in)</option>
+            <option value="riceedu_uat">Rice Edu Testing / UAT (https://lms-uat.riceedu.in)</option>
+          </select>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="pwd-emails">Student Email Address(es)</label>
+          <textarea id="pwd-emails" class="form-control" rows="2" placeholder="e.g. student@riceindia.org (or multiple emails separated by commas or new lines)" required></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="pwd-val">New Password</label>
+          <div style="display:flex;gap:8px;">
+            <input type="password" id="pwd-val" class="form-control" style="flex:1" placeholder="Enter new password (e.g. Rice@2026)" required>
+            <button type="button" class="btn btn-outline" onclick="togglePasswordVisibility()" title="Show/Hide Password" id="btn-toggle-pwd">👁 Show</button>
+            <button type="button" class="btn btn-outline" onclick="generateRandomPassword()" title="Generate Random Password">⚡ Generate</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;display:flex;align-items:center;gap:12px;">
+        <button id="btn-submit-pwd" class="btn btn-primary" onclick="submitPasswordReset()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Reset Password
+        </button>
+        <span id="pwd-spinner" style="display:none;font-size:13px;color:var(--text-muted);">Contacting LMS server...</span>
+      </div>
+
+      <div id="pwd-result" style="display:none;margin-top:20px;"></div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
 <script>
 // --- Swagger Setup ---
@@ -605,8 +813,10 @@ disableSpellcheck();
 function switchView(tab) {
   document.getElementById('view-swagger').style.display = tab === 'swagger' ? 'block' : 'none';
   document.getElementById('view-bulk').style.display = tab === 'bulk' ? 'block' : 'none';
+  document.getElementById('view-password').style.display = tab === 'password' ? 'block' : 'none';
   document.getElementById('btn-swagger').classList.toggle('active', tab === 'swagger');
   document.getElementById('btn-bulk').classList.toggle('active', tab === 'bulk');
+  document.getElementById('btn-password').classList.toggle('active', tab === 'password');
   if (tab === 'bulk') {
     loadEndpoints();
   }
@@ -917,6 +1127,111 @@ function escapeHtml(str) {
   if (!str) return '';
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
+// --- Password Reset JS ---
+function togglePasswordVisibility() {
+  const inp = document.getElementById('pwd-val');
+  const btn = document.getElementById('btn-toggle-pwd');
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    btn.textContent = '🔒 Hide';
+  } else {
+    inp.type = 'password';
+    btn.textContent = '👁 Show';
+  }
+}
+
+function generateRandomPassword() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%&*';
+  let pwd = '';
+  pwd += 'ABCDEFGHJKLMNPQRSTUVWXYZ'[Math.floor(Math.random() * 24)];
+  pwd += 'abcdefghijkmnopqrstuvwxyz'[Math.floor(Math.random() * 24)];
+  pwd += '23456789'[Math.floor(Math.random() * 8)];
+  pwd += '!@#$%&*'[Math.floor(Math.random() * 7)];
+  for (let i = 0; i < 6; i++) {
+    pwd += chars[Math.floor(Math.random() * chars.length)];
+  }
+  pwd = pwd.split('').sort(() => Math.random() - 0.5).join('');
+  const inp = document.getElementById('pwd-val');
+  inp.type = 'text';
+  inp.value = pwd;
+  document.getElementById('btn-toggle-pwd').textContent = '🔒 Hide';
+}
+
+async function submitPasswordReset() {
+  const emailsVal = document.getElementById('pwd-emails').value.trim();
+  const password = document.getElementById('pwd-val').value.trim();
+  const environment = document.getElementById('pwd-env').value;
+  const resultDiv = document.getElementById('pwd-result');
+  const btn = document.getElementById('btn-submit-pwd');
+  const spinner = document.getElementById('pwd-spinner');
+
+  if (!emailsVal) {
+    alert('Please enter at least one student email address.');
+    return;
+  }
+  if (!password) {
+    alert('Please enter a new password.');
+    return;
+  }
+
+  btn.disabled = true;
+  spinner.style.display = 'inline';
+  resultDiv.style.display = 'none';
+
+  try {
+    const rawList = emailsVal.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+    const res = await fetch('/api/student/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        emails: rawList,
+        password: password,
+        environment: environment
+      })
+    });
+    const data = await res.json();
+    resultDiv.style.display = 'block';
+
+    if (data.success) {
+      resultDiv.innerHTML = `
+        <div class="completion-banner banner-success">
+          <div>
+            <strong>✓ Password Reset Successfully</strong><br>
+            <span style="font-size:12px;font-weight:normal;">LMS Target: ${escapeHtml(data.target)}</span><br>
+            <span style="font-size:12px;font-weight:normal;">Emails updated: ${escapeHtml(data.emails.join(', '))}</span>
+          </div>
+        </div>
+        <div style="background:#f8fafc;padding:12px;border-radius:6px;border:1px solid var(--border);font-family:monospace;font-size:12px;max-height:200px;overflow:auto;">
+          ${escapeHtml(JSON.stringify(data.upstreamResponse || data, null, 2))}
+        </div>
+      `;
+    } else {
+      resultDiv.innerHTML = `
+        <div class="completion-banner banner-mixed">
+          <div>
+            <strong>✗ Password Reset Failed (Status ${data.statusCode || res.status})</strong><br>
+            <span style="font-size:12px;font-weight:normal;">${escapeHtml(data.error || data.message || 'LMS server rejected request.')}</span><br>
+            <span style="font-size:12px;font-weight:normal;">LMS Target: ${escapeHtml(data.target || environment)}</span>
+          </div>
+        </div>
+        <div style="background:#fef2f2;padding:12px;border-radius:6px;border:1px solid #fecaca;color:#991b1b;font-family:monospace;font-size:12px;max-height:200px;overflow:auto;">
+          ${escapeHtml(JSON.stringify(data.upstreamResponse || data, null, 2))}
+        </div>
+      `;
+    }
+  } catch (err) {
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+      <div class="completion-banner banner-mixed">
+        <div><strong>Error connecting to proxy:</strong> ${escapeHtml(err.message)}</div>
+      </div>
+    `;
+  } finally {
+    btn.disabled = false;
+    spinner.style.display = 'none';
+  }
+}
 </script>
 </body>
 </html>'''
@@ -1047,6 +1362,8 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             self.wfile.write(csv_bytes)
+        elif path == "/api/student/reset-password/endpoints":
+            self.send_json(PASSWORD_RESET_ENDPOINTS)
         elif path.startswith("/api/proxy/"):
             self.run_proxy("GET")
         else:
@@ -1059,6 +1376,8 @@ class Handler(BaseHTTPRequestHandler):
             self.handle_bulk_parse()
         elif path == "/api/bulk-upload/submit":
             self.handle_bulk_submit()
+        elif path == "/api/student/reset-password":
+            self.handle_reset_password()
         elif path.startswith("/api/proxy/"):
             self.run_proxy("POST")
         else:
@@ -1177,6 +1496,87 @@ class Handler(BaseHTTPRequestHandler):
             })
         except Exception as exc:
             self.send_json({"success": False, "error": f"Bulk submit error: {exc}"}, 500)
+
+    def handle_reset_password(self):
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+            if length == 0:
+                self.send_json({"success": False, "error": "Request body cannot be empty."}, 400)
+                return
+            body_bytes = self.rfile.read(min(length, 1_000_000))
+            payload = json.loads(body_bytes.decode("utf-8"))
+
+            raw_emails = payload.get("emails") or payload.get("email")
+            if not raw_emails:
+                self.send_json({"success": False, "error": "Missing 'email' or 'emails' in request payload."}, 400)
+                return
+
+            if isinstance(raw_emails, str):
+                emails = [e.strip() for e in raw_emails.replace(",", "\n").splitlines() if e.strip()]
+            elif isinstance(raw_emails, list):
+                emails = [str(e).strip() for e in raw_emails if str(e).strip()]
+            else:
+                self.send_json({"success": False, "error": "Invalid format for 'emails'. Expected string or array of strings."}, 400)
+                return
+
+            if not emails:
+                self.send_json({"success": False, "error": "At least one valid student email address is required."}, 400)
+                return
+
+            password = str(payload.get("password") or "").strip()
+            if not password:
+                self.send_json({"success": False, "error": "Missing 'password' in request payload."}, 400)
+                return
+
+            env = str(payload.get("environment") or payload.get("target") or "production").strip().lower()
+            url = str(payload.get("url") or "").strip()
+
+            target_url = url or PASSWORD_RESET_TARGETS.get(env, PASSWORD_RESET_TARGETS["production"])
+            auth_key = get_password_auth_key()
+
+            upstream_payload = {
+                "emails": emails,
+                "password": password
+            }
+            req_data = json.dumps(upstream_payload).encode("utf-8")
+            req = Request(target_url, data=req_data, method="POST")
+            req.add_header("Content-Type", "application/json")
+            req.add_header("Authorization", auth_key)
+
+            try:
+                with urlopen(req, timeout=30) as resp:
+                    resp_status = resp.status
+                    resp_bytes = resp.read()
+            except HTTPError as err:
+                resp_status = err.code
+                resp_bytes = err.read()
+            except URLError as err:
+                self.send_json({
+                    "success": False,
+                    "error": f"Failed to connect to LMS server at {target_url}: {err.reason}",
+                    "target": target_url,
+                    "emails": emails
+                }, 502)
+                return
+
+            resp_text = resp_bytes.decode("utf-8", errors="replace")
+            try:
+                resp_obj = json.loads(resp_text)
+            except ValueError:
+                resp_obj = resp_text
+
+            is_ok = 200 <= resp_status < 300
+            self.send_json({
+                "success": is_ok,
+                "statusCode": resp_status,
+                "message": "Password reset successfully applied." if is_ok else "LMS server returned an error.",
+                "target": target_url,
+                "environment": env,
+                "emails": emails,
+                "upstreamResponse": resp_obj
+            }, resp_status if not is_ok else 200)
+        except Exception as exc:
+            self.send_json({"success": False, "error": f"Password reset processing error: {exc}"}, 500)
 
     def run_proxy(self, method):
         try:

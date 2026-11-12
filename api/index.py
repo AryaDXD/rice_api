@@ -14,3 +14,4 @@ import app
 class handler(app.Handler):
     """Vercel serverless request handler."""
     pass
+
