@@ -978,6 +978,16 @@ def proxy_request(api, payload=None, query=""):
 class Handler(BaseHTTPRequestHandler):
     server_version = "StudentApiTester/1.1"
 
+    @property
+    def effective_path(self) -> str:
+        # Support reverse proxies and Vercel serverless URL rewrites
+        forwarded = (
+            self.headers.get("x-vercel-original-url")
+            or self.headers.get("x-forwarded-uri")
+            or self.headers.get("x-original-uri")
+        )
+        return forwarded if forwarded else self.path
+
     def send_json(self, data, status=200):
         encoded = json.dumps(data).encode()
         self.send_response(status)
@@ -996,7 +1006,7 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        parsed_url = urlparse(self.path)
+        parsed_url = urlparse(self.effective_path)
         path = parsed_url.path
         if path == "/":
             body = PAGE.encode()
@@ -1043,7 +1053,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_error(404)
 
     def do_POST(self):
-        parsed_url = urlparse(self.path)
+        parsed_url = urlparse(self.effective_path)
         path = parsed_url.path
         if path == "/api/bulk-upload/parse":
             self.handle_bulk_parse()
@@ -1170,7 +1180,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def run_proxy(self, method):
         try:
-            parts = self.path.removeprefix("/api/proxy/").split("?", 1)
+            parts = self.effective_path.removeprefix("/api/proxy/").split("?", 1)
             request_id = parts[0]
             query = parts[1] if len(parts) > 1 else ""
             api = next((item for item in catalog() if item["id"] == request_id), None)
@@ -1207,8 +1217,8 @@ class ReusableThreadingHTTPServer(ThreadingHTTPServer):
 
 
 if __name__ == "__main__":
-    host = os.environ.get("API_TESTER_HOST", "127.0.0.1")
-    port = int(os.environ.get("API_TESTER_PORT", "8000"))
+    host = os.environ.get("API_TESTER_HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", os.environ.get("API_TESTER_PORT", "8000")))
     print(f"Student API Tester & Bulk Upload running at http://{host}:{port}")
     try:
         ReusableThreadingHTTPServer((host, port), Handler).serve_forever()

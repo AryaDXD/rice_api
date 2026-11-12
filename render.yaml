@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: rice-api
+    runtime: python
+    plan: free
+    buildCommand: ""
+    startCommand: python app.py
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: API_TESTER_HOST
+        value: 0.0.0.0

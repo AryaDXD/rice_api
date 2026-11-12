@@ -70,4 +70,37 @@ The repository is configured for Postman with `.postman/resources.yaml` linked t
   - `postman/Student-Management-API.postman_collection.json` (Full collection with Bulk Upload & proxy endpoints)
   - `postman/specs/openapi.json` (Full OpenAPI 3.0 specification)
 
-To use a different port, set `API_TESTER_PORT` before running the server (defaults to port `8000`, binding to `127.0.0.1`).
+To use a different port, set `PORT` or `API_TESTER_PORT` before running the server (defaults to port `8000`, binding to `0.0.0.0`).
+
+---
+
+## Free Cloud Deployment
+
+This project is configured out-of-the-box for free cloud hosting with zero maintenance:
+
+### 1. Deploy to Vercel (Free Serverless)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/AryaDXD/rice_api)
+
+1. Push this repository to your GitHub account (`https://github.com/AryaDXD/rice_api`).
+2. Go to [Vercel](https://vercel.com) and sign in with GitHub.
+3. Click **Add New...** -> **Project** and select `rice_api`.
+4. Leave all settings at their defaults (Vercel automatically detects [`vercel.json`](file:///home/rouqh/ATC/rice_api/vercel.json) and [`api/index.py`](file:///home/rouqh/ATC/rice_api/api/index.py)).
+5. Click **Deploy**. Your app will be live with a free SSL domain (e.g. `https://rice-api.vercel.app`).
+
+### 2. Deploy to Render (Free Web Service)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/AryaDXD/rice_api)
+
+1. Sign up for a free account at [Render](https://render.com).
+2. Click **New +** -> **Web Service**.
+3. Connect your `rice_api` GitHub repository.
+4. Render automatically picks up [`render.yaml`](file:///home/rouqh/ATC/rice_api/render.yaml) and [`Procfile`](file:///home/rouqh/ATC/rice_api/Procfile) (`python app.py`).
+5. Choose the **Free** instance type and click **Create Web Service**. Your app is live at `https://rice-api.onrender.com`.
+
+### 3. Deploy to Railway / Koyeb / Docker
+- **Railway**: Connect repo -> Railway detects [`Procfile`](file:///home/rouqh/ATC/rice_api/Procfile) and deploys automatically.
+- **Docker**: Build and run anywhere using the included [`Dockerfile`](file:///home/rouqh/ATC/rice_api/Dockerfile):
+  ```sh
+  docker build -t rice-api .
+  docker run -p 8000:8000 rice-api
+  ```
+

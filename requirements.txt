@@ -1,0 +1,2 @@
+# Pure Python standard library implementation
+# No third-party pip dependencies required.
