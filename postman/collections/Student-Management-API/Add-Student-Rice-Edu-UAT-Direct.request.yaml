@@ -1,0 +1,30 @@
+$kind: http-request
+name: Add Student (Rice Edu Testing / UAT - Direct)
+order: 9000
+url: https://lms-uat.riceedu.in/api/v1/rice/student
+method: POST
+body:
+  type: json
+  content: '{
+  "data": {
+    "firstName": "ALOKPARNA",
+    "middleName": "",
+    "lastName": "KAR",
+    "secondaryEmail": "",
+    "contactNo": "9051496355",
+    "address": "kolkata",
+    "batchUniqueId": "RSMSMPSC2627001",
+    "studentUniqueId": "2627/RICESMART/377",
+    "primaryEmail": "alokparnakar@gmail.com",
+    "secondaryLangauge": "hindi",
+    "classStartDate": "11/6/2026"
+  }
+}'
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 41a54c2e2744dd0fd9df45174564473bc414c666c4b0a99cc14d93003e0c31e8
+  - key: key
+    value: AUTHORIZATION
+

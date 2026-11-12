@@ -1,0 +1,15 @@
+$kind: http-request
+name: DEV Add CA ROLE RICE SMS TO LMS
+order: 2000
+url: https://lms-uat.ricesmart.in/api/v1/rice/ca-roles
+method: POST
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"name\": \"\",\n    \"CAUniqueId\": \"\",\n    \"email\": \"\",\n    \"birth_date\": \"\"\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: d4ff1944491b48f984d2d5fe7209decb
+  - key: key
+    value: AUTHORIZATION

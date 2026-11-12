@@ -1,0 +1,12 @@
+$kind: http-request
+name: SMS Campaign API
+order: 13000
+url: http://111.93.179.194:85/ECommAPITest/api/General/GetActiveCampaignDetails
+method: GET
+auth:
+  type: apikey
+  credentials:
+  - key: key
+    value: X-API-KEY
+  - key: value
+    value: 983rr8hf82nfwi393e42

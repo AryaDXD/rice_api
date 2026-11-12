@@ -1,0 +1,16 @@
+# Local Postman credentials
+/postman/secrets/
+
+# Distribution archives
+*.zip
+*.tar.gz
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/

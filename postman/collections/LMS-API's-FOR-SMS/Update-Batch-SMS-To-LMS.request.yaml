@@ -1,0 +1,15 @@
+$kind: http-request
+name: Update Batch SMS To LMS
+order: 7000
+url: http://localhost:18000/api/v1/rice/batch
+method: PUT
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"batchUniqueId\": \"\",\n    \"action\": \"\",\n    \"status\": \"\"\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: d4ff1944491b48f984d2d5fe7209decb
+  - key: key
+    value: AUTHORIZATION

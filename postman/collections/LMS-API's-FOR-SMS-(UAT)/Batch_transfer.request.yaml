@@ -1,0 +1,16 @@
+$kind: http-request
+name: Batch_transfer
+order: 16000
+url: https://lms.riceedu.in/api/v1/rice/student
+method: PUT
+description: "Generated from cURL: curl --location --request PUT 'https://lms.riceedu.in/api/v1/rice/student' \\\n\r\n--header 'Content-Type: application/json' \\\n\r\n--header 'AUTHORIZATION: 3c643f2d8c624292ae190df0beb644d7' \\\n\r\n--header 'Cookie: csrftoken=BMV10geJaIMYEdlKyyhtrPycVGYllukQDnWFouRRqZnJid5AbIWsdDP7dyvMyvGx; sessionid=1|9z6kg2kqzgqt1nsbmbfioawiwic8fayw|HlfCdwEhBdv1|ImU4NTc4ODMwY2ZhMDBkZWZmNzM4NDYxNmY1OTIzNWU5MWY1MzRkOGZhNWUyNjc4MTkxZjQ3MDcwYmI4OGY0ZmIi:1tATXg:0C0qcW0ZbrVLXjx4tXd4LV5K3riSHnNh8cQr-CJ5Z2Y' \\\n\r\n--data '{\"data\": {\n\r\n        \"studentUniqueId\": \"8697331229\",\n\r\n        \"action\": \"add_batch\",\n\r\n        \"targetBatchUniqueId\": \"WBWES2324052\",\n\r\n        \"clearProgress\": false,\n\r\n        \"langauge\": 2,\n\r\n        \"classStartDate\": \"2023-06-30\"\n\r\n    }\n\r\n}'\n "
+headers:
+- key: Content-Type
+  value: application/json
+- key: AUTHORIZATION
+  value: 3c643f2d8c624292ae190df0beb644d7
+- key: Cookie
+  value: csrftoken=BMV10geJaIMYEdlKyyhtrPycVGYllukQDnWFouRRqZnJid5AbIWsdDP7dyvMyvGx; sessionid=1|9z6kg2kqzgqt1nsbmbfioawiwic8fayw|HlfCdwEhBdv1|ImU4NTc4ODMwY2ZhMDBkZWZmNzM4NDYxNmY1OTIzNWU5MWY1MzRkOGZhNWUyNjc4MTkxZjQ3MDcwYmI4OGY0ZmIi:1tATXg:0C0qcW0ZbrVLXjx4tXd4LV5K3riSHnNh8cQr-CJ5Z2Y
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"studentUniqueId\": \"\",\n    \"action\": \"\",\n    \"targetBatchUniqueId\": \"\",\n    \"clearProgress\": false,\n    \"langauge\": 0,\n    \"classStartDate\": \"\"\n  }\n}"

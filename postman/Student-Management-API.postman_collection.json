@@ -1,0 +1,438 @@
+{
+  "info": {
+    "_postman_id": "4663ec3f-4aa7-42ea-9f5f-b4da6ccdb93c",
+    "name": "Student Management API & Bulk Upload",
+    "description": "Postman collection for Student Management APIs, Bulk Excel/CSV Student Upload, and the local credential-safe proxy.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "prodStudentUrl",
+      "value": "https://lms.ricesmart.in/api/v1/rice/student",
+      "type": "string"
+    },
+    {
+      "key": "uatStudentUrl",
+      "value": "https://lms-uat.ricesmart.in/api/v1/rice/student",
+      "type": "string"
+    },
+    {
+      "key": "riceEduProdStudentUrl",
+      "value": "https://lms.riceedu.in/api/v1/rice/student",
+      "type": "string"
+    },
+    {
+      "key": "riceEduUatStudentUrl",
+      "value": "https://lms-uat.riceedu.in/api/v1/rice/student",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "41a54c2e2744dd0fd9df45174564473bc414c666c4b0a99cc14d93003e0c31e8",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Bulk Student Upload",
+      "item": [
+        {
+          "name": "1. List Student Endpoints",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bulk-upload/endpoints",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bulk-upload",
+                "endpoints"
+              ]
+            },
+            "description": "Returns all student creation endpoints (Production, Testing/UAT, Rice Edu) available in the system."
+          }
+        },
+        {
+          "name": "2. Download Excel Template",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bulk-upload/template.xlsx",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bulk-upload",
+                "template.xlsx"
+              ]
+            },
+            "description": "Downloads sample Excel (.xlsx) template with required column names."
+          }
+        },
+        {
+          "name": "3. Download CSV Template",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bulk-upload/template.csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bulk-upload",
+                "template.csv"
+              ]
+            },
+            "description": "Downloads sample CSV template with required column names."
+          }
+        },
+        {
+          "name": "4. Parse Spreadsheet File",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "batchUniqueId",
+                  "value": "RSMSMPSC2627001",
+                  "type": "text"
+                },
+                {
+                  "key": "classStartDate",
+                  "value": "11/6/2026",
+                  "type": "text"
+                },
+                {
+                  "key": "secondaryLangauge",
+                  "value": "hindi",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bulk-upload/parse",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bulk-upload",
+                "parse"
+              ]
+            },
+            "description": "Parses and validates an uploaded Excel (.xlsx) or CSV file."
+          }
+        },
+        {
+          "name": "5. Execute Bulk Student Upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint_id\": \"2\",\n  \"students\": [\n    {\n      \"firstName\": \"ALOKPARNA\",\n      \"middleName\": \"\",\n      \"lastName\": \"KAR\",\n      \"primaryEmail\": \"alokparnakar@gmail.com\",\n      \"secondaryEmail\": \"\",\n      \"contactNo\": \"9051496355\",\n      \"address\": \"kolkata\",\n      \"batchUniqueId\": \"RSMSMPSC2627001\",\n      \"studentUniqueId\": \"2627/RICESMART/377\",\n      \"secondaryLangauge\": \"hindi\",\n      \"classStartDate\": \"11/6/2026\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bulk-upload/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bulk-upload",
+                "submit"
+              ]
+            },
+            "description": "Uploads students in bulk to selected LMS endpoint (e.g. endpoint_id 2 for Production or 0 for Testing/UAT)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student Endpoints (via Proxy)",
+      "item": [
+        {
+          "name": "Add Student - Production Server (Proxy)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"firstName\": \"ALOKPARNA\",\n    \"middleName\": \"\",\n    \"lastName\": \"KAR\",\n    \"primaryEmail\": \"alokparnakar@gmail.com\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"9051496355\",\n    \"address\": \"kolkata\",\n    \"batchUniqueId\": \"RSMSMPSC2627001\",\n    \"studentUniqueId\": \"2627/RICESMART/377\",\n    \"secondaryLangauge\": \"hindi\",\n    \"classStartDate\": \"11/6/2026\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/proxy/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "proxy",
+                "2"
+              ]
+            },
+            "description": "Working Production Server: https://lms.ricesmart.in/api/v1/rice/student"
+          }
+        },
+        {
+          "name": "Add Student - Testing / UAT Server (Proxy)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"firstName\": \"ALOKPARNA\",\n    \"middleName\": \"\",\n    \"lastName\": \"KAR\",\n    \"primaryEmail\": \"alokparnakar@gmail.com\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"9051496355\",\n    \"address\": \"kolkata\",\n    \"batchUniqueId\": \"RSMSMPSC2627001\",\n    \"studentUniqueId\": \"2627/RICESMART/377\",\n    \"secondaryLangauge\": \"hindi\",\n    \"classStartDate\": \"11/6/2026\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/proxy/0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "proxy",
+                "0"
+              ]
+            },
+            "description": "Testing / UAT Server: https://lms-uat.ricesmart.in/api/v1/rice/student"
+          }
+        },
+        {
+          "name": "Add Student - Rice Edu Production Server (Proxy)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"firstName\": \"ALOKPARNA\",\n    \"middleName\": \"\",\n    \"lastName\": \"KAR\",\n    \"primaryEmail\": \"alokparnakar@gmail.com\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"9051496355\",\n    \"address\": \"kolkata\",\n    \"batchUniqueId\": \"RSMSMPSC2627001\",\n    \"studentUniqueId\": \"2627/RICESMART/377\",\n    \"secondaryLangauge\": \"hindi\",\n    \"classStartDate\": \"11/6/2026\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/proxy/14",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "proxy",
+                "14"
+              ]
+            },
+            "description": "Rice Edu Server: https://lms.riceedu.in/api/v1/rice/student"
+          }
+        },
+        {
+          "name": "Add Student - Rice Edu Testing / UAT Server (Proxy)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"firstName\": \"ALOKPARNA\",\n    \"middleName\": \"\",\n    \"lastName\": \"KAR\",\n    \"primaryEmail\": \"alokparnakar@gmail.com\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"9051496355\",\n    \"address\": \"kolkata\",\n    \"batchUniqueId\": \"RSMSMPSC2627001\",\n    \"studentUniqueId\": \"2627/RICESMART/377\",\n    \"secondaryLangauge\": \"hindi\",\n    \"classStartDate\": \"11/6/2026\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/proxy/15",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "proxy",
+                "15"
+              ]
+            },
+            "description": "Rice Edu Testing / UAT Server: https://lms-uat.riceedu.in/api/v1/rice/student"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Direct LMS Student Requests",
+      "item": [
+        {
+          "name": "Add Student (Production - Direct)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "AUTHORIZATION",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"firstName\": \"ALOKPARNA\",\n    \"middleName\": \"\",\n    \"lastName\": \"KAR\",\n    \"primaryEmail\": \"alokparnakar@gmail.com\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"9051496355\",\n    \"address\": \"kolkata\",\n    \"batchUniqueId\": \"RSMSMPSC2627001\",\n    \"studentUniqueId\": \"2627/RICESMART/377\",\n    \"secondaryLangauge\": \"hindi\",\n    \"classStartDate\": \"11/6/2026\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{prodStudentUrl}}",
+              "protocol": "https",
+              "host": [
+                "lms",
+                "ricesmart",
+                "in"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rice",
+                "student"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Student (Testing / UAT - Direct)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "AUTHORIZATION",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"firstName\": \"ALOKPARNA\",\n    \"middleName\": \"\",\n    \"lastName\": \"KAR\",\n    \"primaryEmail\": \"alokparnakar@gmail.com\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"9051496355\",\n    \"address\": \"kolkata\",\n    \"batchUniqueId\": \"RSMSMPSC2627001\",\n    \"studentUniqueId\": \"2627/RICESMART/377\",\n    \"secondaryLangauge\": \"hindi\",\n    \"classStartDate\": \"11/6/2026\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{uatStudentUrl}}",
+              "protocol": "https",
+              "host": [
+                "lms-uat",
+                "ricesmart",
+                "in"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rice",
+                "student"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Student (Rice Edu Production - Direct)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "AUTHORIZATION",
+                "value": "3c643f2d8c624292ae190df0beb644d7"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"firstName\": \"ALOKPARNA\",\n    \"middleName\": \"\",\n    \"lastName\": \"KAR\",\n    \"primaryEmail\": \"alokparnakar@gmail.com\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"9051496355\",\n    \"address\": \"kolkata\",\n    \"batchUniqueId\": \"RSMSMPSC2627001\",\n    \"studentUniqueId\": \"2627/RICESMART/377\",\n    \"secondaryLangauge\": \"hindi\",\n    \"classStartDate\": \"11/6/2026\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{riceEduProdStudentUrl}}",
+              "protocol": "https",
+              "host": [
+                "lms",
+                "riceedu",
+                "in"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rice",
+                "student"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Student (Rice Edu Testing / UAT - Direct)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "AUTHORIZATION",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"firstName\": \"ALOKPARNA\",\n    \"middleName\": \"\",\n    \"lastName\": \"KAR\",\n    \"primaryEmail\": \"alokparnakar@gmail.com\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"9051496355\",\n    \"address\": \"kolkata\",\n    \"batchUniqueId\": \"RSMSMPSC2627001\",\n    \"studentUniqueId\": \"2627/RICESMART/377\",\n    \"secondaryLangauge\": \"hindi\",\n    \"classStartDate\": \"11/6/2026\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{riceEduUatStudentUrl}}",
+              "protocol": "https",
+              "host": [
+                "lms-uat",
+                "riceedu",
+                "in"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rice",
+                "student"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

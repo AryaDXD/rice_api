@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "bf8c6b06-ecaf-49e3-b30f-abed705b723a",
+		"name": "Add student on Rice Edu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31956883"
+	},
+	"item": [
+		{
+			"name": "Add Student SMS To LMS Copy",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "3c643f2d8c624292ae190df0beb644d7",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"firstName\": \"{{firstName}}\",\n        \"middleName\": \"{{middleName}}\",\n        \"lastName\": \"{{lastName}}\",\n        \"secondaryEmail\": \"{{secondaryEmail}}\",\n        \"contactNo\": \"{{contactNo}}\",\n        \"address\": \"{{address}}\",\n        \"batchUniqueId\": \"{{batchUniqueId}}\",\n        \"studentUniqueId\": \"{{studentUniqueId}}\",\n        \"primaryEmail\": \"{{primaryEmail}}\",\n        \"secondaryLangauge\":\"{{secondaryLangauge}}\",\n        \"classStartDate\":\"{{classStartDate}}\"\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://lms.riceedu.in/api/v1/rice/student",
+					"protocol": "http",
+					"host": [
+						"lms",
+						"riceedu",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"student"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

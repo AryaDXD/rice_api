@@ -1,0 +1,15 @@
+$kind: http-request
+name: UserBatchAdd Copy
+order: 6000
+url: https://lms-uat.ricesmart.in/api/v1/rice/student
+method: PUT
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"firstName\": \"\",\n    \"lastName\": \"\",\n    \"studentUniqueId\": \"\",\n    \"batchUniqueId\": \"\",\n    \"primaryEmail\": \"\",\n    \"contactNo\": \"\",\n    \"action\": \"\",\n    \"targetBatchUniqueId\": \"\",\n    \"clearProgress\": false,\n    \"classStartDate\": \"\"\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION

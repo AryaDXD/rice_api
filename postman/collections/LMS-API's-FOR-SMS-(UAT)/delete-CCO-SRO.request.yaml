@@ -1,0 +1,12 @@
+$kind: http-request
+name: delete CCO/SRO
+order: 19000
+url: https://lms-uat.ricesmart.in/create_user_with_role_and_assign_batches/
+method: DELETE
+description: "Generated from cURL: curl -X DELETE http://yourdomain.com/your-api-url/ \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n        \"username\": \"user123\",\n        \"email\": \"user123@example.com\"\n      }'"
+headers:
+- key: Content-Type
+  value: application/json
+body:
+  type: json
+  content: "{\n  \"username\": \"\",\n  \"email\": \"\"\n}"

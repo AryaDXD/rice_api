@@ -1,0 +1,18 @@
+$kind: http-request
+name: Batch Group Delete
+order: 13000
+url: http://lms.riceedu.in/api/v1/paid-user/get-or-create-batch-group/?id=15
+method: DELETE
+queryParams:
+- key: id
+  value: '15'
+body:
+  type: json
+  content: "{\n  \"name\": \"\",\n  \"batch\": [\n    \"\"\n  ]\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION

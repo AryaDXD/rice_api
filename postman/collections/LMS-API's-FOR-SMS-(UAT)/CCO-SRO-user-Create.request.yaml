@@ -1,0 +1,12 @@
+$kind: http-request
+name: CCO/SRO user Create
+order: 18000
+url: https://lms-uat.ricesmart.in/create_user_with_role_and_assign_batches/
+method: POST
+description: "Generated from cURL: curl -X POST http://yourdomain.com/create-user-role/ \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n          \"username\": \"johndoe\",\n          \"email\": \"johndoe@example.com\",\n          \"password\": \"securepassword\",\n          \"role\": \"admin\",\n          \"firstName\": \"John\",\n          \"middleName\": \"M\",\n          \"lastName\": \"Doe\",\n          \"secondaryEmail\": \"johndoe_secondary@example.com\",\n          \"contactNo\": \"9874478444\",\n          \"address\": \"Kolkata\",\n          \"primaryEmail\": \"johndoe_primary@example.com\",\n          \"secondaryLangauge\": \"Bengali\"\n     }'\n"
+headers:
+- key: Content-Type
+  value: application/json
+body:
+  type: json
+  content: "{\n  \"username\": \"\",\n  \"email\": \"\",\n  \"password\": \"\",\n  \"role\": \"\",\n  \"firstName\": \"\",\n  \"middleName\": \"\",\n  \"lastName\": \"\",\n  \"secondaryEmail\": \"\",\n  \"contactNo\": \"\",\n  \"address\": \"\",\n  \"primaryEmail\": \"\",\n  \"secondaryLangauge\": \"\",\n  \"branch_unique_ids\": [\n    \"\"\n  ]\n}"

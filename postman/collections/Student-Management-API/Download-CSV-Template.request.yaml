@@ -1,0 +1,5 @@
+$kind: http-request
+name: Download CSV Template
+order: 3000
+url: http://127.0.0.1:8000/api/bulk-upload/template.csv
+method: GET

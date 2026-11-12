@@ -1,0 +1,15 @@
+$kind: http-request
+name: defaulter
+order: 15000
+url: http://lms-uat.ricesmart.in/api/v1/paid-user/defaulter_student_list/
+method: POST
+body:
+  type: json
+  content: "{\n  \"entity_type\": \"\",\n  \"defaulters_data\": [\n    {\n      \"student_unique_id\": \"\",\n      \"batch_unique_id\": \"\"\n    }\n  ]\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: d4ff1944491b48f984d2d5fe7209decb
+  - key: key
+    value: AUTHORIZATION

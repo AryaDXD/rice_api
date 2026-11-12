@@ -1,0 +1,11 @@
+$kind: collection
+name: LMS Production Reset Password
+auth:
+  type: apikey
+scripts:
+- type: beforeRequest
+  language: text/javascript
+  code: ''
+- type: afterResponse
+  language: text/javascript
+  code: ''

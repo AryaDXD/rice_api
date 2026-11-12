@@ -1,0 +1,12 @@
+$kind: http-request
+name: cco user update
+order: 20000
+url: https://lms-uat.ricesmart.in/create_user_with_role_and_assign_batches/
+method: PUT
+description: "Generated from cURL: curl -X PUT http://your-domain.com/your-endpoint-url/ \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"email\": \"cco_user@example.com\",\n    \"batch_ids\": [\"batch123\", \"batch456\"]\n}'\n"
+headers:
+- key: Content-Type
+  value: application/json
+body:
+  type: json
+  content: "{\n  \"email\": \"\",\n  \"batch_ids\": [\n    \"\"\n  ]\n}"

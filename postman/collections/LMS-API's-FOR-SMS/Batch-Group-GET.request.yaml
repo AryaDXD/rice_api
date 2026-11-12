@@ -1,0 +1,12 @@
+$kind: http-request
+name: Batch Group GET
+order: 10000
+url: http://localhost:18000/api/v1/paid-user/get-or-create-batch-group
+method: GET
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: d4ff1944491b48f984d2d5fe7209decb
+  - key: key
+    value: AUTHORIZATION

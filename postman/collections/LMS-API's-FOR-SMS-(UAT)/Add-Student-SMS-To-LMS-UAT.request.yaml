@@ -1,0 +1,16 @@
+$kind: http-request
+name: Add Student SMS To LMS (Testing / UAT)
+order: 3500
+url: https://lms-uat.ricesmart.in/api/v1/rice/student
+method: POST
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"firstName\": \"\",\n    \"middleName\": \"\",\n    \"lastName\": \"\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"\",\n    \"address\": \"\",\n    \"batchUniqueId\": \"\",\n    \"studentUniqueId\": \"\",\n    \"primaryEmail\": \"\",\n    \"secondaryLangauge\": \"\",\n    \"classStartDate\": \"\"\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION
+

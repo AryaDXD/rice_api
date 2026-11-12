@@ -1,0 +1,15 @@
+$kind: http-request
+name: DEV update CA ROLE RICE SMS TO LMS PUT
+order: 9000
+url: https://lms-uat.ricesmart.in/api/v1/rice/ca-roles
+method: PUT
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"CAUniqueId\": \"\",\n    \"branchUniqueId\": [\n      \"\"\n    ]\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION

@@ -1,0 +1,5 @@
+$kind: http-request
+name: Download Excel Template
+order: 2000
+url: http://127.0.0.1:8000/api/bulk-upload/template.xlsx
+method: GET

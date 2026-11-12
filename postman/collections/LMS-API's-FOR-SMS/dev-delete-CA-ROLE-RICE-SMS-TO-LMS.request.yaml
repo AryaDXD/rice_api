@@ -1,0 +1,15 @@
+$kind: http-request
+name: dev delete CA ROLE RICE SMS TO LMS
+order: 4000
+url: https://lms-dev.ricesmart.in/api/v1/rice/ca-roles
+method: DELETE
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"CAUniqueId\": \"\"\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: d4ff1944491b48f984d2d5fe7209decb
+  - key: key
+    value: AUTHORIZATION

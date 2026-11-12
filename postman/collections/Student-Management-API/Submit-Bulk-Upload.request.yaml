@@ -1,0 +1,26 @@
+$kind: http-request
+name: Submit Bulk Upload
+order: 5000
+url: http://127.0.0.1:8000/api/bulk-upload/submit
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "endpoint_id": "1",
+      "students": [
+        {
+          "firstName": "ALOKPARNA",
+          "middleName": "",
+          "lastName": "KAR",
+          "primaryEmail": "alokparnakar@gmail.com",
+          "secondaryEmail": "",
+          "contactNo": "9051496355",
+          "address": "kolkata",
+          "batchUniqueId": "RSMSMPSC2627001",
+          "studentUniqueId": "2627/RICESMART/377",
+          "secondaryLangauge": "hindi",
+          "classStartDate": "11/6/2026"
+        }
+      ]
+    }

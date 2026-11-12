@@ -1,0 +1,4 @@
+https://lms.ricesmart.in/api/v1/rice/student
+https://lms-uat.ricesmart.in/api/v1/rice/student
+https://lms.riceedu.in/api/v1/rice/student
+https://lms-uat.riceedu.in/api/v1/rice/student

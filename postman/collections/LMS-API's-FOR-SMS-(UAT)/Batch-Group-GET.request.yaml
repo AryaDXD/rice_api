@@ -1,0 +1,12 @@
+$kind: http-request
+name: Batch Group GET
+order: 11000
+url: https://lms-uat.riceedu.in/api/v1/paid-user/get-or-create-batch-group
+method: GET
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION

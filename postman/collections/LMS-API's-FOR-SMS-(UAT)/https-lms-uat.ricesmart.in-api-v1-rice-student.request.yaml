@@ -1,0 +1,21 @@
+$kind: http-request
+name: https://lms-uat.ricesmart.in/api/v1/rice/student
+order: 15000
+url: https://lms-uat.ricesmart.in/api/v1/rice/student
+method: PUT
+description: "Generated from cURL: curl --location --request PUT 'https://lms-uat.ricesmart.in/api/v1/rice/student' \\\n--header 'Content-Type: application/json' \\\n--header 'AUTHORIZATION: d4ff1944491b48f984d2d5fe7209decb' \\\n--data '{\"data\": {\n        \"studentUniqueId\": \"ddoenj\",\n        \"action\": \"add_batch\",\n        \"targetBatchUniqueId\": \"RSMSMWBC2324018\",\n        \"clearProgress\": false,\n        \"langauge\": 2,\n        \"classStartDate\": \"2023-06-30\"\n    }\n}'"
+headers:
+- key: Content-Type
+  value: application/json
+- key: AUTHORIZATION
+  value: d4ff1944491b48f984d2d5fe7209decb
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"studentUniqueId\": \"\",\n    \"action\": \"\",\n    \"targetBatchUniqueId\": \"\",\n    \"clearProgress\": false,\n    \"langauge\": 0,\n    \"classStartDate\": \"\"\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION

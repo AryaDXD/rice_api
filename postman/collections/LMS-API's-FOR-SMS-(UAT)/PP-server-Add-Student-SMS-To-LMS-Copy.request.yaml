@@ -1,0 +1,15 @@
+$kind: http-request
+name: PP server Add Student SMS To LMS Copy
+order: 4000
+url: https://local.overhang.io/api/v1/rice/student
+method: POST
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"firstName\": \"\",\n    \"middleName\": \"\",\n    \"lastName\": \"\",\n    \"secondaryEmail\": \"\",\n    \"contactNo\": \"\",\n    \"address\": \"\",\n    \"batchUniqueId\": \"\",\n    \"studentUniqueId\": \"\",\n    \"primaryEmail\": \"\",\n    \"secondaryLangauge\": \"\"\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION

@@ -1,0 +1,703 @@
+{
+	"info": {
+		"_postman_id": "3bdc442e-5be8-48b0-8400-5f3b470e6129",
+		"name": "LMS API's FOR SMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31956883"
+	},
+	"item": [
+		{
+			"name": "Add Batch SMS To LMS",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "3c643f2d8c624292ae190df0beb644d7",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\" :{\n        \"batchName\": \"HO_2425_WUG2_11_01\",\n        \"branchUniqueId\": \"HO\",\n        \"batchUniqueId\": \"WBWBC2425013\",\n        \"enrollmentType\": \"L\",\n        \"studentStrength\": 75,\n        \"language\":2,\n        \"category\":1,\n        \"dayPref\": [\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\"],\n        \"startDate\": \"2024-11-09\",\n        \"endDate\": \"2025-11-08\",\n        \"courseId\": \"960\",\n        \"timeSlotsOffline\": [],\n        \"timeSlotsOnline\": [\"20:15T21:45\"],\n        \"minimumStrength\": 10,\n        \"classMode\": \"Offline\" \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://lms.riceedu.in/api/v1/rice/batch",
+					"protocol": "https",
+					"host": [
+						"lms",
+						"riceedu",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"batch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEV Add CA ROLE RICE SMS TO LMS",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"name\": \"Arkya CA\",\n        \"CAUniqueId\": \"CA1234424\",\n        \"email\": \"arkya.santra99@gmail.com\",\n        \"birth_date\": \"1999-11-22\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://lms-uat.ricesmart.in/api/v1/rice/ca-roles",
+					"protocol": "https",
+					"host": [
+						"lms-uat",
+						"ricesmart",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"ca-roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEV update CA ROLE RICE SMS TO LMS PUT",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"CAUniqueId\": \"CA1234426\",\n        \"batchUniqueId\": [\"RSMSMWBC2324021\"]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://lms-uat.ricesmart.in/api/v1/rice/ca-roles",
+					"protocol": "https",
+					"host": [
+						"lms-uat",
+						"ricesmart",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"ca-roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "dev delete CA ROLE RICE SMS TO LMS",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"CAUniqueId\": \"CA123\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://lms-dev.ricesmart.in/api/v1/rice/ca-roles",
+					"protocol": "https",
+					"host": [
+						"lms-dev",
+						"ricesmart",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"ca-roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Batch SMS To LMS local",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\" :{\n        \"batchName\": \"Jul28\",\n        \"branchUniqueId\": \"SMRT\",\n        \"batchUniqueId\": \"WBWES2223079TestPostman1211\",\n        \"studentStrength\": 45,\n        \"language\":2,\n        \"category\":1,\n        \"dayPref\": [\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\"],\n        \"startDate\": \"2021-12-12\",\n        \"endDate\": \"2024-12-12\",\n        \"courseId\": \"838\",\n        \"timeSlotsOnline\": [\"19:59T20:22\"],\n        \"minimumStrength\": 75,\n        \"classMode\": \"Hybrid\" \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:18000/api/v1/rice/batch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18000",
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"batch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Batch SMS To LMS local Copy",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\" :{\n        \"batchName\": \"Jul28\",\n        \"branchUniqueId\": \"SMRT\",\n        \"batchUniqueId\": \"WBWES2223079TestPostman1211\",\n        \"studentStrength\": 45,\n        \"language\":2,\n        \"category\":1,\n        \"dayPref\": [\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\"],\n        \"startDate\": \"2021-12-12\",\n        \"endDate\": \"2024-12-12\",\n        \"courseId\": \"838\",\n        \"timeSlotsOnline\": [\"19:59T20:22\"],\n        \"minimumStrength\": 75,\n        \"classMode\": \"Hybrid\" \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://lms-dev.ricesmart.in/api/v1/rice/batch",
+					"protocol": "https",
+					"host": [
+						"lms-dev",
+						"ricesmart",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"batch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Batch SMS To LMS",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"batchUniqueId\": \"ADAMASTECH0001\",\n        \"action\": \"status_update\",\n        \"status\": \"deactivated\"\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:18000/api/v1/rice/batch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18000",
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"batch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Student SMS To LMS",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"firstName\": \"Arkya\",\n        \"middleName\": \"\",\n        \"lastName\": \"Santra\",\n        \"secondaryEmail\": \"7478284428@dummyricesmart.in\",\n        \"contactNo\": \"7478284428\",\n        \"address\": \"Kolkata\",\n        \"batchUniqueId\": \"ZXCC456\",\n        \"studentUniqueId\": \"hbotmr\",\n        \"primaryEmail\": \"7478284428@dummyricesmart.in\",\n        \"cidNumber\": \"2324023116\",\n        \"secondaryLangauge\":\"hindi\",\n        \"classStartDate\":\"2024-09-03\"\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://lms-new.ricesmart.in/api/v1/rice/student",
+					"protocol": "http",
+					"host": [
+						"lms-new",
+						"ricesmart",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PP server Add Student SMS To LMS",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "3c643f2d8c624292ae190df0beb644d7",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"firstName\": \"test\",\n        \"middleName\": \"\",\n        \"lastName\": \"plan\",\n        \"secondaryEmail\": \"9000111004@gmail.com\",\n        \"contactNo\": \"9000111004\",\n        \"address\": \"maysure\",\n        \"batchUniqueId\": \"SMSSC222300212\",\n        \"studentUniqueId\": \"2223/RICE/3768\",\n        \"primaryEmail\": \"9000111004@gmail.com\",\n        \"cidNumber\": \"2223012881\",\n        \"secondaryLangauge\":\"hindi\"\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://lms-pp.ricesmart.in/api/v1/rice/student",
+					"protocol": "https",
+					"host": [
+						"lms-pp",
+						"ricesmart",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Batch Group GET",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:18000/api/v1/paid-user/get-or-create-batch-group",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18000",
+					"path": [
+						"api",
+						"v1",
+						"paid-user",
+						"get-or-create-batch-group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Batch Group POST",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Batch Group Test 45\",\n    \"batch\":[\"GCGEN1819061\",\"EXSSC1819006\",\"EXBAN1819006\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:18000/api/v1/paid-user/get-or-create-batch-group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18000",
+					"path": [
+						"api",
+						"v1",
+						"paid-user",
+						"get-or-create-batch-group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Batch Group Delete",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Batch Group Test 45\",\n    \"batch\":[\"GCGEN1819061\",\"EXSSC1819006\",\"EXBAN1819006\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:18000/api/v1/paid-user/get-or-create-batch-group/?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18000",
+					"path": [
+						"api",
+						"v1",
+						"paid-user",
+						"get-or-create-batch-group",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SMS Campaign API",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "983rr8hf82nfwi393e42",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://111.93.179.194:85/ECommAPITest/api/General/GetActiveCampaignDetails",
+					"protocol": "http",
+					"host": [
+						"111",
+						"93",
+						"179",
+						"194"
+					],
+					"port": "85",
+					"path": [
+						"ECommAPITest",
+						"api",
+						"General",
+						"GetActiveCampaignDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserBatchAdd",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"data\": {\n        \"firstName\": \"Arkya\",\n        \"lastName\": \"Santra\",\n        \"studentUniqueId\": \"hbotmr\",\n        \"batchUniqueId\": \"8903457835\",\n        \"primaryEmail\": \"arkya22@gmail.com\",\n        \"secondaryEmail\": \"arkya22r@gmail.com\",\n        \"contactNo\": \"7478284428\",\n        \"action\": \"add_batch\",\n        \"targetBatchUniqueId\": \"8903457835\",\n        \"clearProgress\": true,\n        \"classStartDate\": \"2024-08-29\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://lms-uat.ricesmart.in/api/v1/rice/student",
+					"protocol": "https",
+					"host": [
+						"lms-uat",
+						"ricesmart",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"rice",
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "defaulter",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "d4ff1944491b48f984d2d5fe7209decb",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "AUTHORIZATION",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"entity_type\": \"RICESMART\",\n  \"defaulters_data\": [\n    {\n      \"student_unique_id\": \"uxdkaq\",\n      \"batch_unique_id\": \"241123\"\n    }\n  ]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://lms-uat.ricesmart.in/api/v1/paid-user/defaulter_student_list/",
+					"protocol": "http",
+					"host": [
+						"lms-uat",
+						"ricesmart",
+						"in"
+					],
+					"path": [
+						"api",
+						"v1",
+						"paid-user",
+						"defaulter_student_list",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

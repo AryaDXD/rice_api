@@ -1,0 +1,5 @@
+$kind: http-request
+name: List Student Endpoints
+order: 1000
+url: http://127.0.0.1:8000/api/bulk-upload/endpoints
+method: GET

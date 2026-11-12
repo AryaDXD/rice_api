@@ -1,0 +1,29 @@
+$kind: http-request
+name: Add Student (Production - Direct)
+order: 6000
+url: https://lms.ricesmart.in/api/v1/rice/student
+method: POST
+body:
+  type: json
+  content: '{
+  "data": {
+    "firstName": "ALOKPARNA",
+    "middleName": "",
+    "lastName": "KAR",
+    "secondaryEmail": "",
+    "contactNo": "9051496355",
+    "address": "kolkata",
+    "batchUniqueId": "RSMSMPSC2627001",
+    "studentUniqueId": "2627/RICESMART/377",
+    "primaryEmail": "alokparnakar@gmail.com",
+    "secondaryLangauge": "hindi",
+    "classStartDate": "11/6/2026"
+  }
+}'
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION

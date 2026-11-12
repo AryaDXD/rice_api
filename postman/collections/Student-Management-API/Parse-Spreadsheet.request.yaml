@@ -1,0 +1,20 @@
+$kind: http-request
+name: Parse Spreadsheet File
+order: 4000
+url: http://127.0.0.1:8000/api/bulk-upload/parse
+method: POST
+body:
+  type: formdata
+  content:
+  - key: file
+    type: file
+    src: ''
+  - key: batchUniqueId
+    value: RSMSMPSC2627001
+    type: text
+  - key: classStartDate
+    value: 11/6/2026
+    type: text
+  - key: secondaryLangauge
+    value: hindi
+    type: text

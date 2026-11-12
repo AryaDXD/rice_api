@@ -1,0 +1,15 @@
+$kind: http-request
+name: Add Batch SMS To LMS
+order: 1000
+url: https://lms-uat.ricesmart.in/api/v1/rice/batch
+method: POST
+body:
+  type: json
+  content: "{\n  \"data\": {\n    \"batchName\": \"\",\n    \"branchUniqueId\": \"\",\n    \"enrollment_type\": \"\",\n    \"batchUniqueId\": \"\",\n    \"studentStrength\": 0,\n    \"language\": 0,\n    \"category\": 0,\n    \"dayPref\": [\n      \"\"\n    ],\n    \"startDate\": \"\",\n    \"endDate\": \"\",\n    \"courseId\": \"\",\n    \"timeSlotsOffline\": [],\n    \"timeSlotsOnline\": [\n      \"\"\n    ],\n    \"timeSlotsHandout\": [],\n    \"minimumStrength\": 0,\n    \"classMode\": \"\"\n  }\n}"
+auth:
+  type: apikey
+  credentials:
+  - key: value
+    value: 3c643f2d8c624292ae190df0beb644d7
+  - key: key
+    value: AUTHORIZATION
